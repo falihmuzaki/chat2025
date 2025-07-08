@@ -1,6 +1,16 @@
 import React from 'react';
 
 const MessageList = ({ messages }) => {
+    const formatTimestamp = (timestamp) => {
+        if (!timestamp) return '';
+        const date = new Date(timestamp);
+        return date.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: false 
+        });
+    };
+
     if (messages.length === 0) {
         return (
             <div className="text-center text-muted py-4">
@@ -18,7 +28,12 @@ const MessageList = ({ messages }) => {
                             {message.username}
                         </span>
                         <div className="flex-grow-1">
-                            {message.content}
+                            <div className="d-flex justify-content-between align-items-start">
+                                <span>{message.content}</span>
+                                <small className="text-muted ms-2">
+                                    {formatTimestamp(message.timestamp)}
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
