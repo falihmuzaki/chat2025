@@ -43,7 +43,7 @@ services:
       # - /app/node_modules       # juga hindari konflik untuk React
     stdin_open: true            # untuk hot reload React
     tty: true
-    command: ["npm", "run", "start:poll"]
+    command: ["npm", "start"]
 
 volumes:
   mongo-data:
