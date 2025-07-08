@@ -10,7 +10,7 @@ const Chat = () => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/messages');
+                const response = await fetch('api/messages');
                 const result = await response.json();
                 
                 if (response.ok && result.success) {
@@ -30,7 +30,7 @@ const Chat = () => {
 
     const addMessage = async (message) => {
         try {
-            const response = await fetch('http://localhost:5000/api/messages', {
+            const response = await fetch('api/messages', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(message),
