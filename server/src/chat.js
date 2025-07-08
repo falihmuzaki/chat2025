@@ -163,4 +163,27 @@ router.post('/', validateMessageData, async (req, res) => {
     }
 });
 
+// Clear all messages
+router.delete('/', async (req, res) => {
+    try {
+        console.log('Clearing all messages...');
+        
+        const result = await Message.deleteMany({});
+        console.log('Messages cleared successfully:', result.deletedCount);
+        
+        res.json({
+            success: true,
+            message: 'All messages cleared successfully',
+            deletedCount: result.deletedCount
+        });
+    } catch (error) {
+        console.error('Error clearing messages:', error);
+        res.status(500).json({ 
+            error: 'Database Error',
+            message: 'Failed to clear messages',
+            details: error.message 
+        });
+    }
+});
+
 module.exports = router;

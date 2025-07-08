@@ -6,6 +6,7 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [clearing, setClearing] = useState(false);
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -49,6 +50,32 @@ const Chat = () => {
         }
     };
 
+    const clearMessages = async () => {
+        if (!window.confirm('Are you sure you want to clear all messages?')) {
+            return;
+        }
+
+        try {
+            setClearing(true);
+            const response = await fetch('api/messages', {
+                method: 'DELETE',
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                setMessages([]);
+                setError(null);
+            } else {
+                throw new Error(result.error || 'Failed to clear messages');
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setClearing(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="text-center py-5">
@@ -73,6 +100,26 @@ const Chat = () => {
                     ></button>
                 </div>
             )}
+            <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="mb-0">Chat Messages</h5>
+                <button 
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={clearMessages}
+                    disabled={clearing || messages.length === 0}
+                >
+                    {clearing ? (
+                        <>
+                            <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                            Clearing...
+                        </>
+                    ) : (
+                        <>
+                            <i className="bi bi-trash me-1"></i>
+                            Clear Chat
+                        </>
+                    )}
+                </button>
+            </div>
             <div className="card mb-3">
                 <div className="card-body" style={{ height: '400px', overflowY: 'auto' }}>
                     <MessageList messages={messages} />
