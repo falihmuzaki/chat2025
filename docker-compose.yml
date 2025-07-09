@@ -17,7 +17,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - MONGO_URI=mongodb://mongo:SeJheWDtvUHOgRfDotjZUmAFfNBndONx@interchange.proxy.rlwy.net:25391
+      - MONGO_URI=mongodb://mongo:27017/chat-app
     depends_on:
       - mongo
     volumes:
