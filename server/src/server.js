@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 app.use('/api/messages', chatRoutes);
 
 // MongoDB connection
-mongoose.connect('mongodb://mongo:27017/chat-app')
+mongoose.connect('mongodb://mongo:SeJheWDtvUHOgRfDotjZUmAFfNBndONx@interchange.proxy.rlwy.net:25391')
 .then(() => console.log('✅ Connected to MongoDB'))
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
