@@ -1,53 +1,34 @@
 # Stage 1: Build React App
-FROM node:18-alpine AS client-build
+FROM node:18 AS client-build
 
 WORKDIR /app
 
-# Copy package files first for better caching
-COPY client/package*.json ./client/
-WORKDIR /app/client
-RUN npm ci
+COPY client/package.json client/package-lock.json ./client/
+RUN cd client && npm install
 
-# Copy client source and build
-WORKDIR /app
 COPY client ./client
-WORKDIR /app/client
-RUN npm run build
+RUN cd client && npm run build
 
 # Stage 2: Setup Express Server
-FROM node:18-alpine
+FROM node:18
 
 WORKDIR /app
 
-# Copy server package files
-COPY server/package*.json ./server/
-WORKDIR /app/server
-RUN npm ci --only=production
+# Copy backend dependencies
+COPY server/package.json server/package-lock.json ./server/
+RUN cd server && npm install
 
-# Copy server source
-WORKDIR /app
+# Copy backend source
 COPY server ./server
 
-# Copy frontend build to server
+# Copy frontend build result ke backend (untuk di-serve static)
 COPY --from=client-build /app/client/build ./server/build
 
-# Create non-root user for security
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nodejs -u 1001
-
-# Change ownership of app directory
-RUN chown -R nodejs:nodejs /app
-USER nodejs
-
-# Set working directory
+# Set working directory ke server
 WORKDIR /app/server
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node healthcheck.js || exit 1
-
-# Expose port
+# Expose port (ganti ke 5000 kalau Express pakai itu)
 EXPOSE 5000
 
-# Start server
+# Jalankan server
 CMD ["node", "server.js"]
