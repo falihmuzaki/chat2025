@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy package files first for better caching
 COPY client/package*.json ./client/
 WORKDIR /app/client
-RUN npm ci --only=production
+RUN npm ci
 
 # Copy client source and build
 WORKDIR /app
