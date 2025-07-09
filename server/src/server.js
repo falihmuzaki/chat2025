@@ -27,10 +27,11 @@ mongoose.connect(
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Serve client build
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
 app.get('*', (req, res) => {
   if (!req.path.startsWith('/api/')) {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
   }
 });
 
