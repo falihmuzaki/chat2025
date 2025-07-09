@@ -4,8 +4,9 @@ FROM node:18-alpine AS client-build
 # Build client
 WORKDIR /app/client
 COPY client/package*.json ./
-RUN npm ci --only=production
-COPY client/ ./
+RUN npm ci
+COPY client/src ./src
+COPY client/public ./public
 RUN npm run build
 
 # Production server
@@ -13,18 +14,20 @@ FROM node:18-alpine AS production
 
 WORKDIR /app
 
-# Copy server package files
+# Copy server package files first for better caching
 COPY server/package*.json ./
 RUN npm ci --only=production
 
-# Copy server source
-COPY server/ ./
+# Copy only necessary server files
+COPY server/src ./src
 
-# Copy built client to server's public directory
+# Copy built client assets
 COPY --from=client-build /app/client/build ./public
 
-# Expose port (Railway will override with PORT env var)
+# Set environment
+ENV NODE_ENV=production
+ENV PORT=5000
+
 EXPOSE 5000
 
-# Start server in production mode
 CMD ["node", "src/server.js"]
