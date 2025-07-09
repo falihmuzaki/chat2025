@@ -20,9 +20,14 @@ app.use((req, res, next) => {
 app.use('/api/messages', chatRoutes);
 
 // MongoDB connection
-mongoose.connect('mongodb://mongo:SeJheWDtvUHOgRfDotjZUmAFfNBndONx@interchange.proxy.rlwy.net:25391')
+// MongoDB connection
+mongoose.connect('mongodb://mongo:SeJheWDtvUHOgRfDotjZUmAFfNBndONx@interchange.proxy.rlwy.net:25391', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 .then(() => console.log('✅ Connected to MongoDB'))
 .catch(err => console.error('❌ MongoDB connection error:', err));
+
 
 // Root endpoint
 app.get('/', (req, res) => {
