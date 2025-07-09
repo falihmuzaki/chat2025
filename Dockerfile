@@ -21,6 +21,9 @@ RUN npm install
 # Copy only necessary server files
 COPY server/src ./src
 
+# Copy production environment configuration
+COPY .env ./
+
 # Copy built client assets
 COPY --from=client-build /app/client/build ./public
 
