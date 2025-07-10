@@ -21,7 +21,7 @@ app.use('/api/messages', chatRoutes);
 
 // MongoDB connection
 mongoose.connect(
-  process.env.MONGODB_URI,
+  'mongodb://mongo:SeJheWDtvUHOgRfDotjZUmAFfNBndONx@interchange.proxy.rlwy.net:25391',
   { useNewUrlParser: true, useUnifiedTopology: true }
 )
 .then(() => console.log('✅ Connected to MongoDB'))
