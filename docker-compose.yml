@@ -18,8 +18,8 @@ services:
       - "5000:5000"
     environment:
       - MONGO_URI=mongodb://mongo:27017/chat-app
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     depends_on:
       - mongo
     volumes:
