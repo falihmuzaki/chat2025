@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 3000
 
 # Start with development server (hot reload)
-CMD ["npm", "run", "start:poll"]
+CMD ["npm", "run", "dev"]

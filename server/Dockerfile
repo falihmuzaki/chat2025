@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["nodemon", "src/server.js"]
+CMD ["npm", "run", "dev"]

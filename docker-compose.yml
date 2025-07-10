@@ -18,11 +18,13 @@ services:
       - "5000:5000"
     environment:
       - MONGO_URI=mongodb://mongo:27017/chat-app
+    env_file:
+      - .env
     depends_on:
       - mongo
     volumes:
       - ./server:/app
-    command: ["nodemon", "src/server.js"]
+    command: ["npm", "run", "dev"]
 
   client:
     build:
@@ -42,7 +44,7 @@ services:
       - ./client:/app
     stdin_open: true            # untuk hot reload React
     tty: true
-    command: ["npm", "run", "start:poll"]
+    command: ["npm", "run", "dev"]
 
 volumes:
   mongo-data:
