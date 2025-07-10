@@ -24,7 +24,7 @@ services:
       - mongo
     volumes:
       - ./server:/app
-    command: ["npm", "run", "dev"]
+    command: ["npm", "run", "build"]
 
   client:
     build:
@@ -44,7 +44,7 @@ services:
       - ./client:/app
     stdin_open: true            # untuk hot reload React
     tty: true
-    command: ["npm", "run", "dev"]
+    command: ["npm", "run", "build"]
 
 volumes:
   mongo-data:
