@@ -25,7 +25,7 @@ services:
     volumes:
       - ./server:/app
     command: ["npm", "run", "build"]
- 
+
   client:
     build:
       context: ./client
