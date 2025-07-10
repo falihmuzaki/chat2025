@@ -10,7 +10,7 @@ COPY client/public ./public
 RUN npm run build
 
 # Production server
-FROM node:18-alpine AS server-build
+FROM node:18-alpine AS production
 
 WORKDIR /app
 
@@ -29,4 +29,5 @@ COPY --from=client-build /app/client/build ./public
 # ENV PORT=5000
 
 EXPOSE 5000
-RUN npm run build
+
+CMD ["node", "src/server.js"]
